@@ -1,6 +1,6 @@
 # Frontend Mentor - Aplicativo Calculadora
 
-![Visualização do design para o desafio de codificação do aplicativo Calculadora](./design/desktop-preview.jpg)
+![Visualização do design para o desafio de codificação do aplicativo Calculadora](./src/design/desktop-preview.jpg)
 
 ## Bem-vindo! 👋
 
