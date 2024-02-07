@@ -1,10 +1,13 @@
 import './App.css'
+import ButtonsNumbers from './components/ButtonsNumbers'
 
 function App() {
 
   return (
     <>
-     <h1>Iniciando</h1>
+      <ButtonsNumbers />
+      <h1>teste</h1>
+      <h1>teste</h1>
     </>
   )
 }
