@@ -1,13 +1,15 @@
 import './App.css'
 import ButtonsNumbers from './components/ButtonsNumbers'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/scss/bootstrap.scss';
+import Routes from './routers/Router';
+
 
 function App() {
 
   return (
     <>
-      <ButtonsNumbers />
-      <h1>teste</h1>
-      <h1>teste</h1>
+      <Routes />
     </>
   )
 }

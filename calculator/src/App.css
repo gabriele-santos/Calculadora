@@ -3,6 +3,12 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background-color: #3b4664 !important;
 }
 
 .logo {
@@ -40,3 +46,46 @@
 .read-the-docs {
   color: #888;
 }
+
+button.active {
+  font-weight: bold;
+  background-color: #4caf50 !important;
+  color: white;
+}
+
+.custom-switch {
+  display: flex;
+  justify-content: space-between;
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: #232d43;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  /* transition: background-color 0.3s ease; */
+}
+
+.switch-option {
+  width: 20px;
+  height: 20px;
+  background-color: #232d43;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transition: background-color 0.3s ease; */
+  cursor: pointer;
+}
+
+.switch-option.active {
+  background-color: #f96b5c;
+  color: #f7786a;
+  font-weight: bold;
+}
+
+.switch-option:hover {
+  background-color: #f7786a;
+}
+
+
