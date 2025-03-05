@@ -63,7 +63,6 @@ button.active {
   padding: 5px;
   cursor: pointer;
   margin-left: 5px;
-  /* transition: background-color 0.3s ease; */
 }
 
 .switch-option {
@@ -74,7 +73,6 @@ button.active {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* transition: background-color 0.3s ease; */
   cursor: pointer;
 }
 
@@ -86,6 +84,18 @@ button.active {
 
 .switch-option:hover {
   background-color: #f7786a;
+}
+
+.button-beige {
+  box-shadow: 0 6px #beb6b2;
+}
+
+.button-blue {
+  box-shadow: 0 6px #606d98;
+}
+
+.button-red {
+  box-shadow: 0 6px #b53c2d;
 }
 
 

@@ -3,10 +3,10 @@ import { Button, Card, Col, FormGroup, Input, Label, Row } from "reactstrap"
 
 export default function ButtonsNumbers() {
 
-    const [state, setState] = useState(1); // Inicia com a opção 1
+    const [state, setState] = useState(1);
 
     const handleOptionChange = (option) => {
-        setState(option); // Muda o estado para a opção clicada
+        setState(option);
     };
 
     const [number, setNumber] = useState('0')
@@ -16,14 +16,18 @@ export default function ButtonsNumbers() {
 
     const handleClickNumber = (e) => {
         setNumber((prev) => (prev === "0" ? e.toString() : prev + e.toString()));
+        if (result || isNaN(result) || result == Infinity || result == -Infinity || result == 0) {
+            setResult(null);
+        }
     };
 
     console.log({
-        prev: prevNumbers,
+        // result,
         number,
-        operator,
-        result
+        prevNumbers
     });
+
+    // console.log('6.2' + '6.3');
 
 
     const handleOperator = (op) => {
@@ -33,15 +37,22 @@ export default function ButtonsNumbers() {
     };
 
     const calculateNumbers = () => {
+        let prev = parseFloat(prevNumbers);
+        let current = parseFloat(number);
+
         if (operator === '+') {
-            setResult(parseInt(prevNumbers) + parseInt(number))
+            setResult(prev + current)
         } else if (operator === '-') {
-            setResult(parseInt(prevNumbers) - parseInt(number))
-        } else if (operator === '*') {
-            setResult(parseInt(prevNumbers) * parseInt(number))
-        } else if (operator === '/') {
-            setResult(parseInt(prevNumbers) / parseInt(number))
+            setResult(prev - current)
+        } else if (operator === 'x') {
+            setResult(prev * current)
+        } else if (operator === '÷') {
+            setResult(prev / current)
         }
+
+        setNumber('0')
+        setPrevNumbers('')
+        setOperator('')
     }
 
     const handleClear = () => {
@@ -50,6 +61,36 @@ export default function ButtonsNumbers() {
         setNumber('0')
         setOperator('')
     }
+
+    const handleDelete = () => {
+        const numberStr = number.toString();
+
+        console.log(numberStr.length);
+        
+        
+        if (numberStr.length > 1 && numberStr !== '0' && !result && !isNaN(result) && result !== Infinity && result !== -Infinity) {
+            console.log('number');
+            setNumber(numberStr.slice(0, -1));
+        } else if (numberStr.length === 1 && !operator && numberStr !== '0' && !result && !isNaN(result) && result !== Infinity && result !== -Infinity) {
+            console.log('last number');
+            setNumber('0');
+        } else if (operator && !result && !isNaN(result) && result !== Infinity && result !== -Infinity) {
+            console.log('operator');
+            setNumber(prevNumbers);
+            setPrevNumbers('');
+            setOperator('');
+        } else if (result || isNaN(result) || result === Infinity || result === -Infinity) {
+            console.log('result');
+            setPrevNumbers('');
+            setNumber('0');
+            setOperator('');
+            setResult(null);
+        } else {
+            console.log('else');
+        }
+    };
+        
+       
 
     return (
         <Card className="w-50 bg-primary border-0 pb-0 pt-0">
@@ -95,11 +136,19 @@ export default function ButtonsNumbers() {
                         backgroundColor: '#141c34',
                         color: 'white',
                         borderColor: '#141c34',
-                        fontSize: '70px'
+                        fontSize: (isNaN(result) || result === Infinity || result === -Infinity) ? '30px' : '50px'
                     }}
-                    className="p-3 text-end fw-bolder"
+                    className="p-3 text-end fw-bolder d-flex"
                     id="numbers"
-                    value={result !== null && result !== undefined ? result : `${prevNumbers} ${operator} ${number}`}
+                    value={
+                        result !== null && result !== undefined
+                            ? isNaN(result)
+                                ? 'Indefinido'
+                                : result === Infinity || result === -Infinity
+                                    ? 'Não é possível dividir por zero'
+                                    : result
+                            : `${prevNumbers} ${operator} ${number}`
+                    }
                 />
             </Row>
             <Row>
@@ -107,8 +156,8 @@ export default function ButtonsNumbers() {
                     <Row className="mb-3">
                         <Col md={3}>
                             <Button
-                            color="light"
-                                className="w-100 p-2"
+                                color="light"
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(7)}>
                                 7
@@ -116,8 +165,8 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color="light"
-                                className="w-100 p-2"
+                                color="light"
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(8)}>
                                 8
@@ -125,8 +174,8 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color="light"
-                                className="w-100 p-2"
+                                color="light"
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(9)}>
                                 9
@@ -134,10 +183,10 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color="info"
+                                color="info"
                                 style={{ fontSize: '30px' }}
-                                className="w-100 p-2"
-                                onClick={() => handleClear()}
+                                className="w-100 p-2 button-blue"
+                                onClick={() => handleDelete()}
                             >
                                 Del
                             </Button>
@@ -146,8 +195,8 @@ export default function ButtonsNumbers() {
                     <Row className="mb-3">
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(4)}>
                                 4
@@ -155,8 +204,8 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(5)}>
                                 5
@@ -164,8 +213,8 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(6)}>
                                 6
@@ -173,9 +222,9 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
+                                color='light'
                                 style={{ fontSize: '30px' }}
-                                className="w-100 p-2"
+                                className="w-100 p-2 button-beige"
                                 onClick={() => handleOperator('+')}
                             >
                                 +
@@ -185,8 +234,8 @@ export default function ButtonsNumbers() {
                     <Row className="mb-3">
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(1)}>
                                 1
@@ -194,8 +243,8 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(2)}>
                                 2
@@ -203,8 +252,8 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(3)}>
                                 3
@@ -212,9 +261,9 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
+                                color='light'
                                 style={{ fontSize: '30px' }}
-                                className="w-100 p-2"
+                                className="w-100 p-2 button-beige"
                                 onClick={() => handleOperator('-')}
                             >
                                 -
@@ -224,18 +273,18 @@ export default function ButtonsNumbers() {
                     <Row className="mb-3">
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
-                            // onClick={() => handleClickNumber(1)}
+                                onClick={() => handleClickNumber('.')}
                             >
                                 .
                             </Button>
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
                                 onClick={() => handleClickNumber(0)}>
                                 0
@@ -243,20 +292,20 @@ export default function ButtonsNumbers() {
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
-                                className="w-100 p-2"
+                                color='light'
+                                className="w-100 p-2 button-beige"
                                 style={{ fontSize: '30px' }}
-                                onClick={() => handleOperator('/')}
+                                onClick={() => handleOperator('÷')}
                             >
                                 /
                             </Button>
                         </Col>
                         <Col md={3}>
                             <Button
-                            color='light'
+                                color='light'
                                 style={{ fontSize: '30px' }}
-                                className="w-100 p-2"
-                                onClick={() => handleOperator('*')}
+                                className="w-100 p-2 button-beige"
+                                onClick={() => handleOperator('x')}
                             >
                                 x
                             </Button>
@@ -265,18 +314,18 @@ export default function ButtonsNumbers() {
                     <Row>
                         <Col md={6}>
                             <Button
-                            color="info"
-                                className="w-100 p-2"
+                                color="info"
+                                className="w-100 p-2 button-blue"
                                 style={{ fontSize: '30px' }}
-                            // onClick={() => handleClickNumber(1)}
+                                onClick={() => handleClear()}
                             >
                                 Reset
                             </Button>
                         </Col>
                         <Col md={6}>
                             <Button
-                            color="danger"
-                                className="w-100 p-2"
+                                color="danger"
+                                className="w-100 p-2 button-red"
                                 style={{ fontSize: '30px' }}
                                 onClick={calculateNumbers}
                             >
